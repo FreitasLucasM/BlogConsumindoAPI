@@ -3,7 +3,7 @@
         <div class="navbar">
 
             <h1>
-                <a href="#">consumindo API do laravel com vue.js</a>
+                <a href="#">Cadastro de Notas</a>
             </h1>
         </div>
         
