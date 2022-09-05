@@ -1,34 +1,46 @@
 <template>
     <div class="hello">
-      <form class="form">
+      <form>
+        <div class="form-group">
         <p>
-          <input type="text" placeholder="insira o titulo" class="entrada" v-model="artigo.titulo">
+          <input type="text" placeholder="insira o titulo" class="form-control" v-model="artigo.titulo">
         </p>
+        </div>
+        <div class="form-group">
         <p>
-          <textarea class="entrada" placeholder="insira o conteudo" name="conteudo" id="" cols="30" rows="10" v-model="artigo.conteudo"></textarea>
+          <textarea class="form-control" placeholder="insira o conteudo" name="conteudo" id="" cols="30" rows="10" v-model="artigo.conteudo"></textarea>
         </p>
         <input type="hidden" v-model="artigo.id">
         <p>
-          <button class="sucess" id="saveButton" @click="eventButton()">Cadastrar</button>
+          <button class="btn btn-info" id="saveButton" @click="eventButton()">Cadastrar</button>
         </p>
+      </div>
       </form>
 
-      <div class="card" >
-        <div class="post" v-for="artigo in artigos" v-bind:key="artigo.id" id= artigo.id>
-          <h3>{{artigo.titulo}}</h3>
-          <p>{{artigo.conteudo}}</p>
+      <div class="card" v-for="artigo in artigos" v-bind:key="artigo.id">
+        <div class="card-body" >
+          <h3 class="card-title">{{artigo.titulo}}</h3>
+          <p class="card-text">{{artigo.conteudo}}</p>
           <p>
-          <button class="danger" @click="deletarArtigo(artigo.id)">deletar</button>
-          <button class="info" @click="editarArtigo(artigo)">Editar</button>
+          <button class="btn btn-danger" @click="deletarArtigo(artigo.id)">deletar</button>
+          <button class="btn btn-info" @click="editarArtigo(artigo)">Editar</button>
           </p>
         </div>
       </div>
 
-  
-      <br><hr>
-      <a href="#" @click="fetchArtigos(paginacao.prev)"  v-bind:class="[{disabled:!paginacao.prev}]">Anterior</a>
-      Pagina {{paginacao.current_page}} de {{paginacao.last_page}} 
-      <a href="#" @click="fetchArtigos(paginacao.next)" v-bind:class="[{disabled:!paginacao.next}]">Proximo</a>
+<nav aria-label="Navegação de página exemplo">
+  <ul class="pagination justify-content-center">
+      <li>
+        <a class="page-link" href="#" tabindex="-1"  @click="fetchArtigos(paginacao.prev)"  v-bind:class="[{'page-item disabled':!paginacao.prev}]">Anterior</a>
+      </li>
+      <div v-for="index in paginacao.last_page" :key="index">
+        <li class="page-item"><a class="page-link" @click="returnLink(index)">{{index}}</a></li>
+      </div>
+      <li class="page-item">
+        <a class="page-link" href="#" @click="fetchArtigos(paginacao.next)" v-bind:class="[{'page-item disabled':!paginacao.next}]">Próximo</a>
+    </li>
+  </ul>
+</nav>
     </div>
     
     
@@ -52,12 +64,17 @@
       }
     },
     methods:{
+      returnLink(index){
+        const url = 'http://127.0.0.1:8000/api/artigos?page=' + index
+        this.fetchArtigos(url)
+      },
       paginar(meta, links){
         let paginacao = {
           current_page: meta.current_page,
           last_page: meta.last_page,
           next: links.next,
-          prev: links.prev
+          prev: links.prev,
+          links: meta.links
         }
         this.paginacao = paginacao
         
@@ -202,6 +219,9 @@
   textarea.entrada{
     height: 80px;
     margin-bottom: 10px;
+  }
+  .card-body{
+    text-align: justify;
   }
     
   </style>

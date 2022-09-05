@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="navbar">
-
-            <h1>
-                <a href="#">Cadastro de Notas</a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <h1 class="mx-auto">
+                <a class="artigos-a" href="#">Cadastro de Notas</a>
             </h1>
         </div>
-        
+    </nav>
     </div>
 </template>
 
@@ -17,13 +17,11 @@ export default {
 </script>
 
 <style>
-    .navbar{
-        background: #282c34;
-        color: #abb2bf;
-        padding: 10px;
+    .artigos-a{
+        color: #FFF;
     }
-    .navbar a{
-        color: #abb2bf;
+    .artigos-a:hover{
+        color: #FFF;
         text-decoration: none;
     }
 
